@@ -12,12 +12,22 @@ func home(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Why hello there. Welcome to pagez!"))
 }
 
+func pageview(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("This is the pageview page!"))
+}
+
+func createpage(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("This is the pagez create page"))
+}
+
 func main() {
 	// http mux to initialize new servermux
 	// make home function as / handler for url pattern
 
 	router := http.NewServeMux()
-	router.HandleFunc("/", home)
+	router.HandleFunc("/", home)                   // is a subtree path
+	router.HandleFunc("/pagez/view", pageview)     // is a fixed path
+	router.HandleFunc("/pagez/create", createpage) // is also a fixed path
 
 	// http.ListenandServe to make a new server
 	// 2 parameters. TCP to listen on
