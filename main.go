@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 // home handler function which prints out "Hello World"
@@ -19,12 +21,23 @@ func home(writer http.ResponseWriter, request *http.Request) { // function for r
 
 }
 
-func pageview(writer http.ResponseWriter, request *http.Request) { // function for rendering view page
+// function for rendering view page
+func pageview(writer http.ResponseWriter, request *http.Request) {
 
 	if request.URL.Path != "/pagez/pageview" {
 		http.NotFound(writer, request) // Validating page presence
 		return
 	}
+
+	id, err := strconv.Atoi(request.URL.Query().Get("id"))
+
+	if err != nil || id < 1 {
+		http.NotFound(writer, request)
+		return
+	}
+
+	fmt.Fprintf(writer, "This is the pagez pageview with id: %d ", id) // I belive this confirms that this is the specific page
+	// You are looking for.
 
 	writer.Write([]byte("This is the pagez pageview page!"))
 
@@ -39,7 +52,6 @@ func createpage(writer http.ResponseWriter, request *http.Request) { // function
 
 	if request.Method != "POST" { // validating RESTful method
 		writer.Header().Set("Allow", http.MethodPost)
-		writer.Header().Set("Content-Type", "application/json")
 		http.Error(writer, "Method Not allowed", http.StatusMethodNotAllowed) // No error squiggle. == Best Practice
 		return
 	}
