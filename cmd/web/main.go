@@ -13,7 +13,7 @@ import (
 func home(writer http.ResponseWriter, request *http.Request) { // function for rendering home page
 
 	if request.URL.Path != "/" {
-		http.NotFound(writer, request) // Validating page presence
+		http.NotFound(writer, request) // Validating page presence (AKA a Router)
 		return
 	}
 
@@ -21,7 +21,8 @@ func home(writer http.ResponseWriter, request *http.Request) { // function for r
 
 }
 
-// function for rendering view page
+// function for rendering view page(AKA a handler)
+
 func pageview(writer http.ResponseWriter, request *http.Request) {
 
 	if request.URL.Path != "/pagez/pageview" {
@@ -43,7 +44,7 @@ func pageview(writer http.ResponseWriter, request *http.Request) {
 
 }
 
-func createpage(writer http.ResponseWriter, request *http.Request) { // function for rendering create page
+func createpage(writer http.ResponseWriter, request *http.Request) { // function for rendering create page(AKA a handler)
 
 	if request.URL.Path != "/pagez/pagecreate" {
 		http.NotFound(writer, request)
