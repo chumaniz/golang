@@ -18,15 +18,21 @@ func home(writer http.ResponseWriter, request *http.Request) { // function for r
 		return
 	}
 
-	ts, err := template.ParseFiles("./ui/html/pages/home.html") // This is to reads html when project runs
-	if err != nil {                                             // If there is an error validation
+	files := []string{
+		"./ui/html/base.html",
+		"./ui/html/partials/nav.html",
+		"./ui/html/pages/home.html",
+	}
+
+	ts, err := template.ParseFiles(files...) // This is to reads html when project runs
+	if err != nil {                          // If there is an error validation
 		log.Println(err.Error())
 		http.Error(writer, "Internal server error", 500) // What will be printed out in place of the html
 		return
 	}
 
 	// Execute() makes the file path the response body
-	err = ts.Execute(writer, nil)
+	err = ts.ExecuteTemplate(writer, "base", nil)
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(writer, "Internal server error", 500) // This executes the page
