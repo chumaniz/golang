@@ -5,11 +5,18 @@ import (
 	"net/http"
 )
 
-func main() { // function for rendering the renderers
+func main() {
+
+	// function for rendering the renderers
 	// http mux to initialize new servermux
 	// make home function as / handler for url pattern
 	// Do NOT use DeafultServeMux() for production code!
 	router := http.NewServeMux()
+
+	Fileserver := http.FileServer(http.Dir("./ui/static/"))
+
+	router.Handle("/static/", http.StripPrefix("/static", Fileserver))
+
 	router.HandleFunc("/", home)                       // is a subtree path // Method == ANY
 	router.HandleFunc("/pagez/pageview", pageview)     // is a fixed path // Method == ANY
 	router.HandleFunc("/pagez/pagecreate", createpage) // is also a fixed path //Method == POST
