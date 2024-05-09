@@ -10,15 +10,17 @@
 </head>
 <body>
     <header>     
-        <img src="/static/images/favicon-32x32.png">
+        <a href="/"><img src="/static/images/eyecon.png" height="100" width="100"></a>
         <h1><a href="/">Thoughtz</a></h1>
     </header>
     <!-- Adding in the nav partial -->
-    {{template "nav" .}}
+    <nav>
+        <strong><a href="/">Home</a></strong>
+    </nav>
     <main>
         {{template "main" .}}
     </main>
-    <footer>Powered by <a href="https://go.dev/" >Golang</a></footer>
+    <footer><div id="footertxt">Powered by <a href="https://go.dev/" >Golang</a></div></footer>
     <script src="/ui/static/js/script.js" type="text/javascript"></script>
 </body>
 </html>
